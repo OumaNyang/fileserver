@@ -25,13 +25,13 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @PostMapping("/upload")
+    @PostMapping("/api/upload")
     public ResponseEntity<FileMetadata> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         FileMetadata metadata = fileService.saveFile(file);
         return ResponseEntity.ok(metadata);
     }
 
-    @DeleteMapping("/delete/{filename}")
+    @DeleteMapping("/api/delete/{filename}")
     public ResponseEntity<Void> deleteFile(@PathVariable String filename) {
         fileService.deleteFile(filename);
         return ResponseEntity.noContent().build();
@@ -42,7 +42,7 @@ public class FileController {
         return ResponseEntity.ok(fileService.listFiles());
     }
 
-    @GetMapping("/summary")
+    @GetMapping("/api/summary")
     public ResponseEntity<FileSummary> getSummary() {
         return ResponseEntity.ok(fileService.getSummary());
     }
