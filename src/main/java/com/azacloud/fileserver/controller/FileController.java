@@ -1,6 +1,6 @@
 package com.azacloud.fileserver.controller;
-import com.azacloud.fileserver.FileMetadata;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +14,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.azacloud.fileserver.FileMetadata;
+import com.azacloud.fileserver.service.FileService;
+import com.azacloud.fileserver.service.FileSummary;
 
 @RestController
 @RequestMapping("/api/files")
 public class FileController {
 
-    @Autowired;
+    @Autowired
     private FileService fileService;
 
     @PostMapping("/upload")
-    public ResponseEntity<FileMetadata> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<FileMetadata> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         FileMetadata metadata = fileService.saveFile(file);
         return ResponseEntity.ok(metadata);
     }
